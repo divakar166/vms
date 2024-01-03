@@ -1,7 +1,5 @@
-// src/App.js
 import { createBrowserRouter,RouterProvider } from 'react-router-dom';
-import VendorList from './pages/VendorList';
-import VendorDetails from './pages/VendorDetails';
+import { VendorList, VendorDetails, Login, Register } from './pages';
 
 const router = createBrowserRouter([
   {
@@ -11,6 +9,14 @@ const router = createBrowserRouter([
   {
     path:"/vendors/:id",
     element:<VendorDetails />
+  },
+  {
+    path:"/login",
+    element:<Login />
+  },
+  {
+    path:"/register",
+    element:<Register />
   }
 ])
 
