@@ -1,10 +1,10 @@
 import { createBrowserRouter,RouterProvider } from 'react-router-dom';
-import { VendorList, VendorDetails, Login, Register } from './pages';
+import { Dashboard, VendorDetails, Login, Register } from './pages';
 
 const router = createBrowserRouter([
   {
     path:'/',
-    element:<VendorList />
+    element:<Dashboard />
   },
   {
     path:"/vendors/:id",

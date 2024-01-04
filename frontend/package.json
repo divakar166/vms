@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@heroicons/react": "^2.1.1",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.3",
     "postcss": "^8.4.32",

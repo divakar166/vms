@@ -15,3 +15,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.sidebar{
+  height: 100vh;
+  cursor: pointer;
+}
+.sidebar.collapse{
+  @apply bg-lime-400 w-[250px] text-black;
+}
+.sidebar.expand{
+  @apply w-[100px] bg-indigo-700 text-black;
+}
