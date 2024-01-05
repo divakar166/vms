@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <div className='flex '>
       <Sidebar />
-      <div>Main component</div>
+      <div className='ml-5'>Main component</div>
     </div>
   )
 }
