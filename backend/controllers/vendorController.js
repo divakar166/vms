@@ -42,7 +42,7 @@ exports.getVendorPerformance = async (req, res) => {
 };
 
 exports.createVendor = async (req, res) => {
-  const { name, contact, email, address, vendorCode } = req.body;
+  const { name, contact, email, address,password } = req.body;
 
   try {
     const existingVendor = await Vendor.findOne({ email });
@@ -55,7 +55,7 @@ exports.createVendor = async (req, res) => {
       contact,
       email,
       address,
-      vendorCode
+      password
     });
 
     await newVendor.save();

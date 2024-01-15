@@ -1,4 +1,3 @@
-// server/models/PurchaseOrder.js
 const mongoose = require('mongoose');
 
 const purchaseOrderSchema = new mongoose.Schema({
