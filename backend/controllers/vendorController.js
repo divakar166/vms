@@ -49,13 +49,26 @@ exports.createVendor = async (req, res) => {
     if (existingVendor) {
       return res.status(400).json({ message: 'Vendor with this email already exists' });
     }
+    const latestVendor = await Vendor.findOne({}, {}, { sort: { vendorCode: -1 } });
+    let latestNumber = 0;
+
+    if (latestVendor) {
+      const latestCode = latestVendor.vendorCode;
+      const match = latestCode.match(/\d+/);
+      latestNumber = match ? parseInt(match[0], 10) : 0;
+    }
+
+    const newNumber = latestNumber + 1;
+    const paddedNumber = padNumber(newNumber, 3);
+    const vendorCode = `VN${paddedNumber}`;
 
     const newVendor = new Vendor({
       name,
       contact,
       email,
       address,
-      password
+      password,
+      vendorCode
     });
 
     await newVendor.save();
@@ -69,6 +82,11 @@ exports.createVendor = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+function padNumber(number, width) {
+  const padded = number.toString().padStart(width, '0');
+  return padded;
+}
 
 exports.deleteVendor = async (req, res) => {
   const { vendorCode } = req.params;
