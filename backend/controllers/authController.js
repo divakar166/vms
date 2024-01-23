@@ -17,8 +17,13 @@ exports.login = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Incorrect password!' });
     }
-
-    const token = jwt.sign({ id: vendor._id }, process.env.JWT_SECRET);
+    const payload = {
+      id: vendor._id,
+      email: vendor.email,
+      vendorCode: vendor.vendorCode,
+      name: vendor.name,
+    };
+    const token = jwt.sign(payload, process.env.JWT_SECRET,{expiresIn:'1h'});
     res.json({ token });
   } catch (error) {
     console.error('Login error:', error);

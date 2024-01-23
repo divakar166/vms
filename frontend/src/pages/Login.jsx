@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useAuth } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
 import bg from '../images/bg.jpg';
 
 export default function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
   const [message,setMessage] = useState('');
   const handleLogin = async(e) => {
     e.preventDefault();
@@ -17,8 +21,9 @@ export default function Login() {
       })
       if (response.ok) {
         const { token } = await response.json();
+        login(token);
         setMessage('Login Success!')
-        console.log('Login successful:', { token });
+        navigate('/')
       } else {
         const error = await response.json();
         setMessage(error['message'])

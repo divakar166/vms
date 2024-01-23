@@ -1,14 +1,25 @@
-import { createBrowserRouter,RouterProvider } from 'react-router-dom';
+import { createBrowserRouter,RouterProvider, Navigate } from 'react-router-dom';
 import { Dashboard, VendorDetails, Login, Register } from './pages';
+import { useAuth } from './pages/AuthContext';
+
+const PrivateRoute = ({ element }) => {
+  const { isLoggedIn } = useAuth();
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
+
+  return element;
+};
 
 const router = createBrowserRouter([
   {
     path:'/',
-    element:<Dashboard />
+    element:<PrivateRoute element={<Dashboard />} />,
   },
   {
     path:"/vendors/:id",
-    element:<VendorDetails />
+    element:<PrivateRoute element={<VendorDetails />} />,
   },
   {
     path:"/login",
