@@ -3,7 +3,8 @@ import { Dashboard, VendorDetails, Login, Register } from './pages';
 import { useAuth } from './pages/AuthContext';
 
 const PrivateRoute = ({ element }) => {
-  const { isLoggedIn } = useAuth();
+  const token = localStorage.getItem('token')
+  let isLoggedIn = !!token;
 
   if (!isLoggedIn) {
     return <Navigate to="/login" />;

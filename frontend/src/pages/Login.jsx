@@ -42,7 +42,6 @@ export default function Login() {
             <h2 className="text-2xl font-bold">Welcome Back</h2>
             <p className="text-slate-500">Please enter credentails to log into your account</p>
           </div>
-          {message}
           <form className="pl-5 pr-5" onSubmit={handleLogin}>
             <div className='mb-2'>
               <input type="text" placeholder='Enter vendor code' name='vendorCode' className='p-2 w-full rounded-sm' />
@@ -53,6 +52,7 @@ export default function Login() {
             <div className="mt-2 mb-2">
               <a href="/login" className='text-blue-500'>Forget password?</a>
             </div>
+            <div className="text-red-600">{message}</div>
             <div className="mt-2">
               <button type="submit" className='bg-blue-500 text-white font-semibold p-2 w-full rounded-sm'>Login</button>
             </div>

@@ -3,6 +3,11 @@ import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, HomeIcon, ArrowLeftStart
 
 const Sidebar = () => {
   const [active,setActive] = useState(false);
+  const sidebarItems = [
+    { id: 1, label: 'Dashboard' },
+    { id: 2, label: 'Profile' },
+    { id: 3, label: 'Settings' },
+  ];
   const Icon = active ? ChevronDoubleLeftIcon : ChevronDoubleRightIcon;
   return (
     <div 
@@ -15,28 +20,33 @@ const Sidebar = () => {
         )}
         <div 
           onClick={()=>setActive(!active)}
-          className='grid place-content-center cursor-pointer bg-slate-200 rounded-xl w-10 h-10'
+          className='grid place-content-center cursor-pointer hover:bg-slate-200 rounded-xl w-10 h-10'
         >
           <Icon style={{color:'#000',height:'30px',width:'30px'}} />
         </div>
       </div>
       <div className='p-2 flex-grow'>
-        <div className={`p-2 flex cursor-pointer`}>
-          <div className='grid place-content-center cursor-pointer bg-slate-200 w-10 h-10 rounded-xl'>
+      {sidebarItems.map((item)=>{
+        <div>{item.label}</div>
+      })}
+      </div>
+      {/* <div className='p-2 flex-grow'>
+        <div className={`p-2 flex hover:bg-slate-300 rounded-lg cursor-pointer`}>
+          <div className='grid  place-content-center cursor-pointer  w-10 h-10 rounded-xl'>
             <HomeIcon style={{color:'#000',width:'30px',height:'30px'}} />
           </div>
           {active && (
-            <div className='center hover:scale-110 w-full font-semibold'>Dashboard</div>
+            <div className={`${sidebarItem == 'dashboard' && 'bg-slate-300'} center w-full font-semibold`}>Dashboard</div>
           )}
         </div>
-      </div>
+      </div> */}
       <div className='p-2'>
-        <div className={`p-2 flex cursor-pointer`}>
-          <div className='grid place-content-center cursor-pointer bg-slate-200 w-10 h-10 rounded-xl'>
+        <div className={`p-2 flex hover:bg-slate-300 rounded-lg cursor-pointer`}>
+          <div className='grid  place-content-center cursor-pointer w-10 h-10 rounded-xl'>
             <ArrowLeftStartOnRectangleIcon style={{color:'#000',width:'30px',height:'30px'}} />
           </div>
           {active && (
-            <div className='center hover:scale-110 w-full font-semibold'>Logout</div>
+            <div className='center  w-full font-semibold'>Logout</div>
           )}
         </div>
       </div>
