@@ -1,5 +1,5 @@
 import { createBrowserRouter,RouterProvider, Navigate } from 'react-router-dom';
-import { Dashboard, VendorDetails, Login, Register } from './pages';
+import { HomePage, VendorDetails, Login, Register } from './pages';
 import { useAuth } from './pages/AuthContext';
 
 const PrivateRoute = ({ element }) => {
@@ -16,7 +16,7 @@ const PrivateRoute = ({ element }) => {
 const router = createBrowserRouter([
   {
     path:'/',
-    element:<PrivateRoute element={<Dashboard />} />,
+    element:<PrivateRoute element={<HomePage />} />,
   },
   {
     path:"/vendors/:id",

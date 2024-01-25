@@ -1,12 +1,36 @@
 import React, { useState } from 'react';
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, HomeIcon, ArrowLeftStartOnRectangleIcon } from '@heroicons/react/24/outline';
+import { 
+  ChevronDoubleLeftIcon, 
+  ChevronDoubleRightIcon, 
+  HomeIcon, 
+  ArrowLeftStartOnRectangleIcon,
+  UserIcon,
+  Cog6ToothIcon
+} from '@heroicons/react/24/outline';
 
-const Sidebar = () => {
+const SidebarItem = ({ label, icon, onClick, sidebarActive,isActive }) => {
+  return (
+    <div
+      className={`sidebar-item my-1 ${isActive ? 'active' : ''} p-2 flex hover:bg-slate-300 rounded-lg cursor-pointer`}
+      onClick={onClick}
+    >
+      <div className='grid place-content-center cursor-pointer w-10 h-10 rounded-xl'>
+        {icon}
+      </div>
+      {sidebarActive && 
+      <div className="center w-full text-[18px] font-semibold">
+        {label}
+      </div>}
+    </div>
+  );
+};
+
+const Sidebar = ({onSidebarItemClick, activeItem}) => {
   const [active,setActive] = useState(false);
   const sidebarItems = [
-    { id: 1, label: 'Dashboard' },
-    { id: 2, label: 'Profile' },
-    { id: 3, label: 'Settings' },
+    { id: 1, label: 'Dashboard',key:'dashboard', icon:<HomeIcon style={{color:'#000',width:'30px',height:'30px'}} />},
+    { id: 2, label: 'Profile',key:'profile',icon:<UserIcon style={{color:'#000',width:'30px',height:'30px'}} />},
+    { id: 3, label: 'Settings',key:'settings',icon:<Cog6ToothIcon style={{color:'#000',width:'30px',height:'30px'}} />},
   ];
   const Icon = active ? ChevronDoubleLeftIcon : ChevronDoubleRightIcon;
   return (
@@ -26,27 +50,24 @@ const Sidebar = () => {
         </div>
       </div>
       <div className='p-2 flex-grow'>
-      {sidebarItems.map((item)=>{
-        <div>{item.label}</div>
-      })}
+        {sidebarItems.map((item) => (
+          <SidebarItem
+            key={item.id}
+            label={item.label}
+            icon={item.icon}
+            sidebarActive={active}
+            onClick={() => onSidebarItemClick(item.key)}
+            isActive={item.key === activeItem}
+          />
+        ))}
       </div>
-      {/* <div className='p-2 flex-grow'>
-        <div className={`p-2 flex hover:bg-slate-300 rounded-lg cursor-pointer`}>
-          <div className='grid  place-content-center cursor-pointer  w-10 h-10 rounded-xl'>
-            <HomeIcon style={{color:'#000',width:'30px',height:'30px'}} />
-          </div>
-          {active && (
-            <div className={`${sidebarItem == 'dashboard' && 'bg-slate-300'} center w-full font-semibold`}>Dashboard</div>
-          )}
-        </div>
-      </div> */}
       <div className='p-2'>
         <div className={`p-2 flex hover:bg-slate-300 rounded-lg cursor-pointer`}>
           <div className='grid  place-content-center cursor-pointer w-10 h-10 rounded-xl'>
             <ArrowLeftStartOnRectangleIcon style={{color:'#000',width:'30px',height:'30px'}} />
           </div>
           {active && (
-            <div className='center  w-full font-semibold'>Logout</div>
+            <div className='center text-[18px] w-full font-semibold'>Logout</div>
           )}
         </div>
       </div>

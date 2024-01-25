@@ -30,3 +30,9 @@ code {
   align-items: center;
   text-align: center;
 }
+.sidebar-item{
+  @apply bg-none;
+}
+.sidebar-item.active{
+  @apply bg-slate-300;
+}
