@@ -18,10 +18,7 @@ code {
 .sidebar{
   height: 100vh;
   cursor: pointer;
-  width: 70px;
-}
-.sidebar-collapsed{
-  width: 200px;
+  width: 220px;
 }
 .center{
   display: flex;
@@ -33,6 +30,9 @@ code {
 .sidebar-item{
   @apply bg-none;
 }
+.sidebar-item:hover .label, .sidebar-item:hover .icon{
+  @apply text-white;  
+}
 .sidebar-item.active{
-  @apply bg-slate-300;
+  @apply bg-blue-500;
 }
