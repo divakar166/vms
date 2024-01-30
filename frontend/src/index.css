@@ -18,7 +18,7 @@ code {
 .sidebar{
   height: 100vh;
   cursor: pointer;
-  width: 220px;
+  min-width: 220px;
 }
 .center{
   display: flex;

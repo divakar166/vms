@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { 
-  ChevronDoubleLeftIcon, 
-  ChevronDoubleRightIcon, 
+import {
   HomeIcon, 
   ArrowLeftStartOnRectangleIcon,
   UserIcon,

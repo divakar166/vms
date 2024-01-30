@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <div className='flex '>
       <Sidebar onSidebarItemClick={handleSidebarItemClick} activeItem={activeItem} />
-      <div className='ml-5'>
+      <div className='ml-5 w-screen'>
         {activeItem === 'dashboard' && <DashboardContent />}
         {activeItem === 'orders' && <OrdersPage />}
         {activeItem === 'profile' && <ProfileContent />}
