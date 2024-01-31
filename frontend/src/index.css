@@ -36,3 +36,16 @@ code {
 .sidebar-item.active{
   @apply bg-blue-500;
 }
+.order-item{
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem;
+}
+.order-item .item{
+  font-weight: bold;
+  font-size: 30px;
+}
+.order-item .item-sub{
+  font-size: 14px;
+  font-weight: 600;
+}
