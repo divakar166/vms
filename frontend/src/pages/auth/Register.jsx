@@ -1,5 +1,5 @@
 // import React, { useState } from 'react';
-import bg from '../images/bg.jpg';
+import bg from './bg.jpg';
 
 export default function Register() {
   return (

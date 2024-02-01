@@ -1,6 +1,7 @@
 import { createBrowserRouter,RouterProvider, Navigate } from 'react-router-dom';
-import { HomePage, VendorDetails, Login, Register } from './pages';
-import { useAuth } from './pages/AuthContext';
+import { HomePage, VendorDetails } from './pages/user';
+import { Login, Register } from './pages/auth';
+// import { useAuth } from './pages/AuthContext';
 
 const PrivateRoute = ({ element }) => {
   const token = localStorage.getItem('token')

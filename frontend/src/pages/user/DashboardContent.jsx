@@ -1,23 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Chart as ChartJS,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Radar } from 'react-chartjs-2';
-import growth from '../images/growth.svg';
-ChartJS.register(
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend
-);
+import growth from './growth.svg';
+import BarChart from './charts/BarChart';
+import RadarChart from './charts/RadarChart';
 
 const DashboardContent = () => {
   const [metricsData, setMetricsData] = useState({
@@ -49,28 +33,6 @@ const DashboardContent = () => {
 
     fetchData();
   }, []);
-  const chartData = {
-    labels: ['Time Delivery Rate','Quality Rating','Average Response Time','Fulfillment Rate'],
-    datasets: [
-      {
-        label: 'Performance Metrics',
-        data: Object.values(metricsData),
-        backgroundColor: 'rgba(75,192,192,0.4)',
-        borderColor: 'rgba(75,192,192,1)',
-        pointBackgroundColor: 'rgba(75,192,192,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(75,192,192,1)',
-      },
-    ],
-  };
-  const chartOptions = {
-    scales: {
-      r: {
-        beginAtZero: true,
-      },
-    },
-  };
   return (
     <div className='m-1'>
       <div className='bg-blue-100 pl-5 rounded-lg h-40 flex justify-between'>
@@ -82,11 +44,11 @@ const DashboardContent = () => {
         <div><img src={growth} className='h-[150px] mr-10' alt="" /></div>
       </div>
       <div className='flex mt-4'>
-        <div className='bg-slate-200 w-[450px] mr-5 px-5 py-1 rounded-lg flex justify-center flex-col'>
-          <Radar data={chartData} options={chartOptions} />
+        <div className='bg-slate-100 w-[450px] mr-5 px-5 py-1 rounded-lg flex justify-center flex-col'>
+          <RadarChart data={metricsData} />
         </div>
-        <div className='bg-slate-200 w-[450px] px-5 py-1 rounded-lg flex justify-center flex-col'>
-          {/* <Radar data={chartData} options={chartOptions} /> */}
+        <div className='bg-slate-100 w-[450px] px-5 py-1 rounded-lg flex justify-center flex-col'>
+          <BarChart orderData={{total:12,completed:3,pending:8,cancelled:1}} />
         </div>
       </div>
     </div>
