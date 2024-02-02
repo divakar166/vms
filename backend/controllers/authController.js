@@ -5,7 +5,6 @@ const Vendor = require('../models/Vendor');
 exports.login = async (req, res) => {
   try {
     const { vendorCode, password } = req.body;
-    console.log(vendorCode,password)
 
     const vendor = await Vendor.findOne({ vendorCode });
 
