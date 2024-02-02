@@ -15,10 +15,11 @@ const DashboardContent = () => {
           'Content-Type': 'application/json',
         },
       })
-        .then((response) => console.log(response.json()))
-        .then((data) => setUser(data))
-        .then((data)=> console.log(data))
-        .catch((error) => console.error('Error fetching user data:', error));
+      .then(response => response.json())
+      .then(data => {
+        setUser(data);
+      })
+      .catch((error) => console.error('Error fetching user data:', error));
     }
   }, []);
   return (
@@ -26,7 +27,7 @@ const DashboardContent = () => {
       <div className='bg-blue-100 pl-5 rounded-lg h-40 flex justify-between'>
         <div className='mt-6'>
           <div className='text-4xl'>You are doing great </div>
-          <div className='text-3xl font-bold text-blue-500'>Divakar!</div>
+          <div className='text-3xl font-bold text-blue-500'>{user && user.name}</div>
           <div className='text-lg'>Keep it up </div>
         </div>
         <div><img src={growth} className='h-[150px] mr-10' alt="" /></div>

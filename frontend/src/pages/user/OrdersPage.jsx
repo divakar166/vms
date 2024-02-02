@@ -2,7 +2,9 @@ import React from 'react'
 
 const OrdersPage = () => {
   return (
-    <div>OrdersPage</div>
+    <div className='bg-slate-300 m-1'>
+      
+    </div>
   )
 }
 
