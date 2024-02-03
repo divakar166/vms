@@ -29,7 +29,28 @@ const OrdersPage = () => {
   }, []);
   return (
     <div className='bg-slate-300 m-1'>
-      
+       <table>
+      <thead>
+        <tr>
+          <th>PO Number</th>
+          <th>Order Date</th>
+          <th>Quantity</th>
+          <th>Delivery Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {purchaseOrders.map((order) => (
+          <tr key={order._id}>
+            <td>{order.po_number}</td>
+            <td>{new Date(order.order_date).toLocaleDateString()}</td>
+            <td>{order.quantity}</td>
+            <td>{new Date(order.delivery_date).toLocaleDateString()}</td>
+            <td>{order.status}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
     </div>
   )
 }

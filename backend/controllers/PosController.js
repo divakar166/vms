@@ -25,26 +25,32 @@ exports.getPurchaseOrderById = async (req, res) => {
 };
 
 exports.createPurchaseOrder = async (req, res) => {
-  const { po_number, vendorCode, order_date, delivery_date, completion_date, items, quantity, status, quality_rating, issue_date, acknowledgment_date } = req.body;
+  const { vendorCode, delivery_date, items, quantity } = req.body;
 
   try {
     const existingVendor = await Vendor.findOne({vendorCode});
     if (!existingVendor) {
       return res.status(400).json({ message: 'Vendor not found' });
     }
+    const latestPO = await PurchaseOrder.findOne({}, {}, { sort: { po_number: -1 } });
+    let latestNumber = 0;
+
+    if (latestPO) {
+      const latestCode = latestPO.po_number;
+      const match = latestCode.match(/\d+/);
+      latestNumber = match ? parseInt(match[0], 10) : 0;
+    }
+
+    const newNumber = latestNumber + 1;
+    const paddedNumber = padNumber(newNumber, 3);
+    const po_number = `PO${paddedNumber}`;
 
     const newPurchaseOrder = new PurchaseOrder({
       po_number,
       vendor:existingVendor._id,
-      order_date,
       delivery_date,
-      completion_date,
       items,
-      quantity,
-      status,
-      quality_rating,
-      issue_date,
-      acknowledgment_date,
+      quantity
     });
 
     await newPurchaseOrder.save();
@@ -54,6 +60,11 @@ exports.createPurchaseOrder = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+function padNumber(number, width) {
+  const padded = number.toString().padStart(width, '0');
+  return padded;
+}
 
 exports.updatePurchaseOrder = async (req, res) => {
   const { id } = req.params;
