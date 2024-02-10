@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useMemo } from 'react';
+// import { useTable } from 'react-table';
+// import { COLUMNS } from './utils';
 const OrdersPage = () => {
   const [purchaseOrders, setPurchaseOrders] = useState([]);
-
   useEffect(() => {
     const fetchPurchaseOrders = async () => {
       try {
