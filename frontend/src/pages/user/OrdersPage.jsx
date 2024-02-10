@@ -36,7 +36,7 @@ const OrdersPage = () => {
           <th>Order Date</th>
           <th>Quantity</th>
           <th>Delivery Date</th>
-          <th>Status</th>
+          <th>Current Status</th>
         </tr>
       </thead>
       <tbody>
