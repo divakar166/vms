@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
 import {
   HomeIcon, 
   ArrowLeftStartOnRectangleIcon,
   UserIcon,
-  Cog6ToothIcon,
   ShoppingCartIcon
 } from '@heroicons/react/24/outline';
 
@@ -28,7 +26,6 @@ const Sidebar = ({onSidebarItemClick, activeItem}) => {
     { id: 1, label: 'Dashboard',key:'dashboard', icon:<HomeIcon style={{width:'25px',height:'25px'}} />},
     { id: 2, label: 'Orders',key:'orders',icon:<ShoppingCartIcon style={{width:'25px',height:'25px'}} />},
     { id: 3, label: 'Profile',key:'profile',icon:<UserIcon style={{width:'25px',height:'25px'}} />},
-    { id: 4, label: 'Settings',key:'settings',icon:<Cog6ToothIcon style={{width:'25px',height:'25px'}} />},
   ];
   return (
     <div 
@@ -61,4 +58,4 @@ const Sidebar = ({onSidebarItemClick, activeItem}) => {
   )
 }
 
-export default Sidebar
+export default Sidebar;
