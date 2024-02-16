@@ -1,6 +1,7 @@
 import { createBrowserRouter,RouterProvider, Navigate } from 'react-router-dom';
 import { HomePage } from './pages/user';
-import { Login, Register } from './pages/auth';
+import AdminHomePage from './pages/admin/AdminHomePage';
+import { Login, Register, AdminLogin } from './pages/auth';
 
 const PrivateRoute = ({ element }) => {
   const token = localStorage.getItem('token')
@@ -12,6 +13,15 @@ const PrivateRoute = ({ element }) => {
 
   return element;
 };
+
+const AdminPrivateRoute = ({element}) => {
+  const adminToken = localStorage.getItem('adminToken');
+  let isAdminLoggedIn = !!adminToken;
+  if(!isAdminLoggedIn){
+    return <Navigate to="/admin/login" />
+  }
+  return element;
+}
 
 const router = createBrowserRouter([
   {
@@ -25,7 +35,15 @@ const router = createBrowserRouter([
   {
     path:"/register",
     element:<Register />
-  }
+  },
+  {
+    path:'/admin',
+    element:<AdminPrivateRoute element={<AdminHomePage />} />,
+  },
+  {
+    path:'/admin/login',
+    element:<AdminLogin />,
+  },
 ])
 
 function App() {
