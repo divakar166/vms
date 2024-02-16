@@ -10,6 +10,28 @@ exports.getAllVendors = async (req, res) => {
   }
 };
 
+exports.getAllVendorsPerformances = async (req,res) => {
+  try {
+    const performances = await PerformanceMetrics.find().populate('vendor');
+    res.json(performances);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+exports.getVendorCode = async (req, res) => {
+  const _id = req.params._id;
+  try {
+    const vendor = await Vendor.findById(_id);
+    if (!vendor) {
+      return res.status(404).json({ error: 'Vendor not found' });
+    }
+    res.json({ vendorCode: vendor.vendorCode });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.getVendorById = async (req, res) => {
   const { vendorCode } = req.params;
 

@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import DashboardContent from './DashboardContent';
-import ProfileContent from './ProfileContent';
-import OrdersPage from './OrdersPage';
+import { Sidebar, DashboardContent, OrdersPage, ProfileContent } from './index'
 
 const HomePage = () => {
   const [activeItem, setActiveItem] = useState('dashboard');

@@ -1,6 +1,6 @@
 import { createBrowserRouter,RouterProvider, Navigate } from 'react-router-dom';
 import { HomePage } from './pages/user';
-import AdminHomePage from './pages/admin/AdminHomePage';
+import { AdminHomePage } from './pages/admin';
 import { Login, Register, AdminLogin } from './pages/auth';
 
 const PrivateRoute = ({ element }) => {
