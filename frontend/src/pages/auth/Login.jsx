@@ -9,7 +9,7 @@ export default function Login() {
   const [message,setMessage] = useState('');
   const handleLogin = async(e) => {
     e.preventDefault();
-    let vendorCode = e.target.vendorCode.value;
+    let email = e.target.email.value;
     let password = e.target.password.value;
     try{
       const response = await fetch('http://localhost:5000/auth/login',{
@@ -17,7 +17,7 @@ export default function Login() {
         headers:{
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify({vendorCode,password})
+        body:JSON.stringify({email,password})
       })
       if (response.ok) {
         const { token } = await response.json();
@@ -44,7 +44,7 @@ export default function Login() {
           </div>
           <form className="pl-5 pr-5" onSubmit={handleLogin}>
             <div className='mb-2'>
-              <input type="text" placeholder='Enter vendor code' name='vendorCode' className='p-2 w-full rounded-sm' />
+              <input type="email" placeholder='Enter email' name='email' className='p-2 w-full rounded-sm' />
             </div>
             <div className='mt-2 mb-2'>
               <input type="password" placeholder='Enter password' name='password' className='p-2 w-full rounded-sm' />
@@ -52,11 +52,11 @@ export default function Login() {
             <div className="mt-2 mb-2">
               <a href="/login" className='text-blue-500'>Forget password?</a>
             </div>
-            <div className="text-red-600">{message}</div>
             <div className="mt-2">
               <button type="submit" className='bg-blue-500 text-white font-semibold p-2 w-full rounded-sm'>Login</button>
             </div>
           </form>
+          <div className="text-red-600 pl-5">{message}</div>
           <div className="p-5 flex justify-center">
             <p className="text-slate-500">Don't have an account? <a href="/register" className='text-blue-500 font-semibold'>Sign Up</a></p>
           </div>

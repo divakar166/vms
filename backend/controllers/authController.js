@@ -5,14 +5,16 @@ const PurchaseOrder = require('../models/Pos');
 
 const login = async (req, res) => {
   try {
-    const { vendorCode, password } = req.body;
+    const { email, password } = req.body;
 
-    const vendor = await Vendor.findOne({ vendorCode });
+    const vendor = await Vendor.findOne({ email });
 
     if (!vendor) {
       return res.status(401).json({ message: 'Vendor not found!' });
     }
-
+    if(vendor.status != 'active'){
+      return res.status(401).json({ message: 'Account not active!' });
+    }
     const passwordMatch = await bcrypt.compare(password, vendor.password);
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Incorrect password!' });
@@ -29,6 +31,29 @@ const login = async (req, res) => {
     res.json({ token });
   } catch (error) {
     console.error('Login error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const register = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    const vendor = await Vendor.findOne({ email });
+
+    if (vendor) {
+      return res.status(401).json({ message: 'Vendor with this email already exist' });
+    }
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newVendor = new Vendor({
+      name,
+      email,
+      password: hashedPassword
+    });
+    await newVendor.save();
+    res.status(201).json({ message: 'Registration successful! Pending for approval.' });
+  } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
@@ -54,4 +79,4 @@ const getPurchaseOrders = async (req,res) => {
   }
 }
 
-module.exports = { login, getVendor, getPurchaseOrders };
+module.exports = { login, register, getVendor, getPurchaseOrders };

@@ -34,8 +34,14 @@ const Vendors = () => {
   }, []);
   return (
     <div className='my-1 mx-2'>
-      <div className='text-2xl my-2'>
-        Vendors
+      <div className='flex justify-between items-center'>
+        <div className='text-2xl my-2'>
+          Vendors
+        </div>
+        <div className='text-lg py-1 mr-2 px-2 cursor-pointer text-white bg-blue-500 rounded-lg'>
+          Requests
+          <span className='absolute text-center leading-4 top-1 right-3 bg-red-500 rounded-full text-sm h-4 w-4'>0</span>
+        </div>
       </div>
       <table className='min-w-full divide-y divide-gray-200' {...getTableProps()}>
         <thead className='bg-gray-50'>
