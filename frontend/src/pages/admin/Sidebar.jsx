@@ -1,11 +1,34 @@
+import React, { useState, useEffect } from 'react';
 import {
   UserGroupIcon, 
   ArrowLeftStartOnRectangleIcon,
   ChartBarIcon,
-  ClipboardDocumentCheckIcon
+  ClipboardDocumentCheckIcon,
+  UserPlusIcon
 } from '@heroicons/react/24/outline';
 
 const SidebarItem = ({ label, icon, onClick,isActive }) => {
+  const [requests,setRequests] = useState([])
+  useEffect(()=>{
+    const fetchVendorReq = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/vendorsReq', {
+          method: 'GET',
+          headers:{
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Error fetching vendors');
+        }
+        const data = await response.json();
+        setRequests(data.length)
+      } catch (error) {
+        console.error('Error fetching vendors:', error);
+      }
+    }
+    fetchVendorReq();
+  })
   return (
     <div
       className={`sidebar-item my-1 ${isActive ? 'active' : ''} px-2 py-1 flex hover:bg-blue-500 rounded-2xl cursor-pointer`}
@@ -16,6 +39,9 @@ const SidebarItem = ({ label, icon, onClick,isActive }) => {
       </div>
       <div className={`${isActive?'text-white':''} label center w-full text-black font-semibold`}>
         {label}
+      </div>
+      <div className='flex justify-center items-center'>
+        {label == 'Requests' && (<span className='text-center text-white leading-6 bg-red-500 rounded-sm text-sm h-6 w-6'>{requests}</span>)}
       </div>
     </div>
   );
@@ -30,6 +56,7 @@ const Sidebar = ({onSidebarItemClick, activeItem}) => {
     { id: 1, label: 'Vendors',key:'vendors', icon:<UserGroupIcon style={{width:'25px',height:'25px'}} />},
     { id: 2, label: 'Orders',key:'orders',icon:<ClipboardDocumentCheckIcon style={{width:'25px',height:'25px'}} />},
     { id: 3, label: 'Performance',key:'performance',icon:<ChartBarIcon style={{width:'25px',height:'25px'}} />},
+    { id: 4, label: 'Requests',key:'requests',icon:<UserPlusIcon style={{width:'25px',height:'25px'}} />},
   ];
   return (
     <div 

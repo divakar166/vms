@@ -26,7 +26,7 @@ const vendorSchema = new mongoose.Schema({
   },
   status:{
     type:String,
-    default:'not active'
+    default:'inactive'
   }
 });
 

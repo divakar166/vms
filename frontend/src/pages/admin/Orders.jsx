@@ -8,6 +8,7 @@ import {
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const columns = useMemo(()=> OrdersColumn,[])
+  const [message,setMessage] = useState('');
   const {getTableProps,getTableBodyProps,headerGroups,rows,prepareRow} = useTable({
     columns,
     data:orders,
@@ -38,6 +39,9 @@ const Orders = () => {
             vendor: vendorData.vendorCode,
           };
         }));
+        if(data.length === 0){
+          setMessage('No data found!')
+        }
         setOrders(formattedData);
       } catch (error) {
         console.error('Error fetching vendors:', error);
@@ -62,6 +66,7 @@ const Orders = () => {
           ))}
         </thead>
         <tbody className='bg-white divide-y divide-gray-200' {...getTableBodyProps()}>
+        {message && (<tr><td colSpan={6} className='text-center text-lg'>{message}</td></tr>)}
           {rows.map((row, rowIndex) => {
             prepareRow(row);
             return (

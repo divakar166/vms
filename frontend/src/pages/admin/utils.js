@@ -17,6 +17,25 @@ export const VendorColumns = [
   },
 ];
 
+export const RequestsColumns = [
+  {
+    Header:'Vendor Code',
+    accessor:'vendorCode',
+  },
+  {
+    Header:'Name',
+    accessor:'name',
+  },
+  {
+    Header:'Email',
+    accessor:'email',
+  },
+  {
+    Header:'Action',
+    accessor:'action',
+  },
+];
+
 export const OrdersColumn = [
   {
     Header:'PO Number',

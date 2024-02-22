@@ -3,3 +3,4 @@ export { default as Vendors } from './Vendors';
 export { default as Orders } from './Orders';
 export { default as Performance } from './Performance';
 export { default as Sidebar } from './Sidebar';
+export { default as Requests } from './Requests';

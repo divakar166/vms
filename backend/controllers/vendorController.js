@@ -3,16 +3,49 @@ const PerformanceMetrics = require('../models/PerformanceMetrics');
 
 exports.getAllVendors = async (req, res) => {
   try {
-    const vendors = await Vendor.find();
+    const vendors = await Vendor.find({status:'active'});
     res.json(vendors);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
+exports.getAllVendorsRequests = async (req, res) => {
+  try {
+    const vendors = await Vendor.find({status:'inactive'});
+    res.json(vendors);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.acceptVendorReq = async (req,res) => {
+  try {
+    const { id } = req.params;
+    await Vendor.findByIdAndUpdate(id, { status: 'active' });
+    res.status(200).json({ message: 'Vendor request accepted successfully' });
+  } catch (error) {
+    console.error('Error accepting vendor request:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+exports.rejectVendorReq = async (req,res) => {
+  try {
+    const { id } = req.params;
+    await Vendor.findByIdAndUpdate(id, { status: 'rejected' });
+    res.status(200).json({ message: 'Vendor request rejected successfully' });
+  } catch (error) {
+    console.error('Error rejecting vendor request:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 exports.getAllVendorsPerformances = async (req,res) => {
   try {
-    const performances = await PerformanceMetrics.find().populate('vendor');
+    const activeVendors = await Vendor.find({ status: 'active' });
+    const vendorIds = activeVendors.map(vendor => vendor._id);
+    const performances = await PerformanceMetrics.find({ vendor: { $in: vendorIds } }).populate('vendor');
     res.json(performances);
   } catch (error) {
     res.status(500).json({ error: error.message });

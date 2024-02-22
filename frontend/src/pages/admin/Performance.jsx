@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 import { PerfColumn } from './utils.js';
-import {
-  PencilIcon
-} from '@heroicons/react/24/outline';
+// import {
+//   PencilIcon
+// } from '@heroicons/react/24/outline';
 const Performance = () => {
   const [performances, setPerformances] = useState([]);
   const columns = useMemo(()=> PerfColumn,[])
+  const [message,setMessage] = useState('');
   const {getTableProps,getTableBodyProps,headerGroups,rows,prepareRow} = useTable({
     columns,
     data:performances,
@@ -24,7 +25,9 @@ const Performance = () => {
           throw new Error('Error fetching performances');
         }
         const data = await response.json();
-        console.log(data)
+        if (data.length === 0){
+          setMessage('No data found!')
+        }
         setPerformances(data);
       } catch (error) {
         console.error('Error fetching performance:', error);
@@ -49,6 +52,7 @@ const Performance = () => {
           ))}
         </thead>
         <tbody className='bg-white divide-y divide-gray-200' {...getTableBodyProps()}>
+        {message && (<tr><td colSpan={5} className='text-center text-lg'>{message}</td></tr>)}
           {rows.map((row, rowIndex) => {
             prepareRow(row);
             return (

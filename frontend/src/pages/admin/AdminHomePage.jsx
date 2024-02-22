@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sidebar, Vendors, Orders, Performance } from './index';
+import { Sidebar, Vendors, Orders, Performance, Requests } from './index';
 
 const AdminHomePage = () => {
   const [activeItem, setActiveItem] = useState('vendors');
@@ -13,6 +13,7 @@ const AdminHomePage = () => {
         {activeItem === 'vendors' && <Vendors />}
         {activeItem === 'orders' && <Orders />}
         {activeItem === 'performance' && <Performance />}
+        {activeItem === 'requests' && <Requests />}
       </div>
     </div>
   )
