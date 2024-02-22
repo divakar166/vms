@@ -6,6 +6,7 @@ const Requests = () => {
   const [requests, setRequests] = useState([]);
   const columns = useMemo(() => RequestsColumns, []);
   const [message, setMessage] = useState('');
+  const [dataMessage,setDataMessage] = useState('');
   
   const acceptVendorRequest = async (vendorId) => {
     try {
@@ -63,7 +64,7 @@ const Requests = () => {
       }
       const data = await response.json();
       if (data.length === 0) {
-        setMessage('No data found!');
+        setDataMessage('No data found!');
       }
       setRequests(data);
     } catch (error) {
@@ -97,6 +98,7 @@ const Requests = () => {
           ))}
         </thead>
         <tbody className='bg-white divide-y divide-gray-200' {...getTableBodyProps()}>
+          {dataMessage && (<tr className='text-center'><td colSpan={4}>{dataMessage}</td></tr>)}
           {rows.map((row, rowIndex) => {
             prepareRow(row);
             return (

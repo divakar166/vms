@@ -26,7 +26,6 @@ exports.getPurchaseOrderById = async (req, res) => {
 
 exports.createPurchaseOrder = async (req, res) => {
   const { vendorCode, delivery_date, items, quantity } = req.body;
-
   try {
     const existingVendor = await Vendor.findOne({vendorCode});
     if (!existingVendor) {
