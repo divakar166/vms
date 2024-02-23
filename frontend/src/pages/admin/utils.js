@@ -63,6 +63,29 @@ export const OrdersColumn = [
   },
 ];
 
+export const AdminOrdersColumn = [
+  {
+    Header:'PO Number',
+    accessor:'po_number',
+  },
+  {
+    Header:'Order Date',
+    accessor:'order_date',
+  },
+  {
+    Header:'Delivery Date',
+    accessor:'delivery_date',
+  },
+  {
+    Header:'Assigned To',
+    accessor:'vendor',
+  },
+  {
+    Header:'Status',
+    accessor:'status',
+  },
+];
+
 export const PerfColumn = [
   {
     Header:'Vendor Code',
