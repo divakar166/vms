@@ -1,18 +1,27 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 import { VendorColumns } from './utils.js';
-// import {
-//   PencilIcon
-// } from '@heroicons/react/24/outline';
+import {
+  PencilIcon
+} from '@heroicons/react/24/outline';
+import EditVendorModal from './modals/EditVendorModal.jsx';
 
 const Vendors = () => {
   const [message,setMessage] = useState('');
   const [vendors, setVendors] = useState([]);
-  const columns = useMemo(()=> VendorColumns,[])
+  const [selectedVendorCode,setSelectedVendorCode] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const columns = useMemo(()=> VendorColumns,[]);
   const {getTableProps,getTableBodyProps,headerGroups,rows,prepareRow} = useTable({
     columns,
     data:vendors,
   });
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
   useEffect(() => {
     const fetchVendors = async () => {
       try {
@@ -62,7 +71,7 @@ const Vendors = () => {
                   <td className={`px-6 py-4 whitespace-nowrap`
                   } {...cell.getCellProps()}>
                     {cell.render('Cell')}
-                    {cellIndex === columns.length - 1 && 'Edit'}
+                    {cellIndex === columns.length - 1 && <PencilIcon onClick={()=>{openModal();setSelectedVendorCode(row.original.vendorCode)}}style={{width:'20px',height:'20px'}} className='hover:text-blue-500 cursor-pointer' />}
                   </td>
                 ))}
               </tr>
@@ -70,6 +79,7 @@ const Vendors = () => {
           })}
         </tbody>
       </table>
+      <EditVendorModal isOpen={isModalOpen} onClose={closeModal} vendorCode={selectedVendorCode} />
     </div>
   )
 }

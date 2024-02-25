@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 import { AdminOrdersColumn } from './utils.js';
-import AddNewPOModal from './AddNewPOModal.jsx';
+import AddNewPOModal from './modals/AddNewPOModal.jsx';
 
 const Orders = () => {  
   const [orders, setOrders] = useState([]);
@@ -46,7 +46,7 @@ const Orders = () => {
         }
         setOrders(formattedData);
       } catch (error) {
-        console.error('Error fetching vendors:', error);
+        console.error('Error fetching orders:', error);
       }
     };
     fetchOrders();

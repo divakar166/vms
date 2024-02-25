@@ -1,9 +1,31 @@
-import { useState } from "react";
-import {
-  PlusIcon,
-} from '@heroicons/react/24/outline';
+import { useEffect, useState } from "react";
 
 const AddNewPOModal = ({isOpen,onClose}) => {
+  const [vendors,setVendors] = useState([]);
+  const [message,setMessage] = useState('');
+  useEffect(() => {
+    const fetchVendors = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/vendors', {
+          method: 'GET',
+          headers:{
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Error fetching vendors');
+        }
+        const data = await response.json();
+        if (data.length === 0){
+          setMessage('No data found!')
+        }
+        setVendors(data);
+      } catch (error) {
+        console.error('Error fetching vendors:', error);
+      }
+    };
+    fetchVendors();
+  }, []);
   const [addPOStatus,setAddPOStatus] =useState('');
   const [formData,setFormData] = useState({
     vendorCode:'0',
@@ -95,10 +117,13 @@ const AddNewPOModal = ({isOpen,onClose}) => {
                     <div className="mb-2">
                       <label htmlFor="vendor">Assign to : </label>
                       <select name="vendorCode" id="vendorCode" value={formData.vendor} onChange={handleInputChange}>
-                        <option value="0">Select Vendor</option>
-                        <option value="VN001">VN001</option>
+                        {(vendors.length == 0) ? <option value="0">{message}</option> : <option value="0">Select Vendor</option> }
+                        {vendors.map((vendor,index)=>(
+                          <option value={vendor.vendorCode} key={index}>{vendor.vendorCode}</option>
+                        ))}
+                        {/* <option value="VN001">VN001</option>
                         <option value="VN002">VN002</option>
-                        <option value="VN003">VN003</option>
+                        <option value="VN003">VN003</option> */}
                       </select>
                       {errors.vendor && <p className="text-red-500">{errors.vendor}</p>}
                     </div>
