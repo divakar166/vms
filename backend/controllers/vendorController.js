@@ -52,32 +52,27 @@ exports.getAllVendorsPerformances = async (req,res) => {
   }
 }
 
-exports.getVendorCode = async (req, res) => {
-  const _id = req.params._id;
+exports.getVendorByIdentifier = async (req, res) => {
   try {
-    const vendor = await Vendor.findById(_id);
-    if (!vendor) {
-      return res.status(404).json({ error: 'Vendor not found' });
+    const { identifier } = req.params;
+    let vendor;
+    if (/^[0-9a-fA-F]{24}$/.test(identifier)) {
+      vendor = await Vendor.findById(identifier);
+    } else {
+      vendor = await Vendor.findOne({ vendorCode: identifier });
     }
-    res.json({ vendorCode: vendor.vendorCode });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
 
-exports.getVendorById = async (req, res) => {
-  const { vendorCode } = req.params;
-
-  try {
-    const vendor = await Vendor.findOne({vendorCode});
     if (!vendor) {
       return res.status(404).json({ message: 'Vendor not found' });
     }
-    res.json(vendor);
+
+    return res.json(vendor);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error fetching vendor:', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
-};
+}
+
 
 exports.getVendorPerformance = async (req, res) => {
   const { vendorCode } = req.params;

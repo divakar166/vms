@@ -71,7 +71,7 @@ const Vendors = () => {
                   <td className={`px-6 py-4 whitespace-nowrap`
                   } {...cell.getCellProps()}>
                     {cell.render('Cell')}
-                    {cellIndex === columns.length - 1 && <PencilIcon onClick={()=>{openModal();setSelectedVendorCode(row.original.vendorCode)}}style={{width:'20px',height:'20px'}} className='hover:text-blue-500 cursor-pointer' />}
+                    {cellIndex === columns.length - 1 && <PencilIcon onClick={()=>{openModal();setSelectedVendorCode(row.original.vendorCode)}} style={{width:'20px',height:'20px'}} className='hover:text-blue-500 cursor-pointer' />}
                   </td>
                 ))}
               </tr>

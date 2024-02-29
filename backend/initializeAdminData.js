@@ -5,17 +5,13 @@ require('dotenv').config();
 
 async function initializeAdminData() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    await mongoose.connect(process.env.MONGODB_URI);
     const count = await Admin.countDocuments();
     if (count === 0) {
-      const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash('admin', saltRounds);
       const newAdmin = new Admin({
-        username: 'admin',
-        password: hashedPassword
+        name: 'Divakar Singh',
+        email:'admin@vms.com',
+        password: 'admin'
       });
       await newAdmin.save();
       console.log('Admin data added successfully');

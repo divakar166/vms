@@ -41,7 +41,7 @@ const SidebarItem = ({ label, icon, onClick,isActive }) => {
         {label}
       </div>
       <div className='flex justify-center items-center'>
-        {label == 'Requests' && (<span className='text-center text-white leading-6 bg-red-500 rounded-sm text-sm h-6 w-6'>{requests}</span>)}
+        {label == 'Requests' && (<span className='text-center text-white leading-6 bg-red-500 rounded-full text-sm h-6 w-6'>{requests}</span>)}
       </div>
     </div>
   );

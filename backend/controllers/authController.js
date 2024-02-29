@@ -26,7 +26,6 @@ const login = async (req, res) => {
       vendorCode: vendor.vendorCode,
       name: vendor.name,
     };
-
     const token = jwt.sign(payload, process.env.JWT_SECRET);
     res.json({ token });
   } catch (error) {
@@ -44,12 +43,10 @@ const register = async (req, res) => {
     if (vendor) {
       return res.status(401).json({ message: 'Vendor with this email already exist' });
     }
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
     const newVendor = new Vendor({
       name,
       email,
-      password: hashedPassword
+      password
     });
     await newVendor.save();
     res.status(201).json({ message: 'Registration successful! Pending for approval.' });

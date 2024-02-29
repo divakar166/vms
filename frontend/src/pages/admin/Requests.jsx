@@ -5,7 +5,6 @@ import { RequestsColumns } from './utils.js';
 const Requests = () => {
   const [requests, setRequests] = useState([]);
   const columns = useMemo(() => RequestsColumns, []);
-  const [message, setMessage] = useState('');
   const [dataMessage,setDataMessage] = useState('');
   
   const acceptVendorRequest = async (vendorId) => {
@@ -17,7 +16,9 @@ const Requests = () => {
         },
       });
       if (response.ok) {
-        setMessage('Vendor request accepted successfully');
+        let message = 'Vendor request accepted successfully';
+        document.getElementById('buttonContainer').style.display = 'none';
+        showMessage(message,'green');
         setTimeout(fetchRequests, 1000);
       } else {
         throw new Error('Error accepting vendor request');
@@ -36,7 +37,9 @@ const Requests = () => {
         },
       });
       if (response.ok) {
-        setMessage('Vendor request rejected successfully');
+        let message = 'Vendor request rejected successfully';
+        document.getElementById('buttonContainer').style.display = 'none';
+        showMessage(message,'red');
         setTimeout(fetchRequests, 1000);
       } else {
         throw new Error('Error rejecting vendor request');
@@ -46,6 +49,13 @@ const Requests = () => {
     }
   };
 
+  const showMessage = (message,color) => {
+    const messageElement = document.createElement('div');
+    messageElement.textContent = message;
+    messageElement.className = `text-${color}-500`
+    const messageContainer = document.getElementById('messageContainer');
+    messageContainer.append(messageElement);
+  };
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
     data: requests,
@@ -81,7 +91,6 @@ const Requests = () => {
       <div className='text-2xl my-2'>
         Vendor Requests
       </div>
-      {message && <div className="text-green-500">{message}</div>}
       <table className='min-w-full divide-y divide-gray-200' {...getTableProps()}>
         <thead className='bg-gray-50'>
           {headerGroups.map((headerGroup) => (
@@ -108,18 +117,23 @@ const Requests = () => {
                     {cell.render('Cell')}
                     {cellIndex === columns.length - 1 && (
                       <div className='flex'>
-                        <div
-                          className='px-2 py-1 border-green-400 border-2 rounded-lg bg-green-300 text-slate-700 mr-2 cursor-pointer hover:text-green-500'
-                          onClick={() => acceptVendorRequest(row.original._id)}
-                        >
-                          Accept
+                        <div className="flex" id='buttonContainer'>
+                          <div
+                            className='px-2 py-1 border-green-400 border-2 rounded-lg bg-green-300 text-slate-700 mr-2 cursor-pointer hover:text-green-500'
+                            id='acceptButton'
+                            onClick={() => acceptVendorRequest(row.original._id)}
+                          >
+                            Accept
+                          </div>
+                          <div
+                            className='px-2 py-1 border-red-400 border-2 rounded-lg bg-red-300 text-slate-700 cursor-pointer hover:text-red-500'
+                            id='rejectButton'
+                            onClick={() => rejectVendorRequest(row.original._id)}
+                          >
+                            Reject
+                          </div>
                         </div>
-                        <div
-                          className='px-2 py-1 border-red-400 border-2 rounded-lg bg-red-300 text-slate-700 cursor-pointer hover:text-red-500'
-                          onClick={() => rejectVendorRequest(row.original._id)}
-                        >
-                          Reject
-                        </div>
+                        <div id='messageContainer'></div>
                       </div>
                     )}
                   </td>

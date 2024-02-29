@@ -97,34 +97,6 @@ exports.deletePurchaseOrder = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-exports.acknowledgePurchaseOrder = async (req, res) => {
-  const { po_number } = req.params;
-  const { vendorCode } = req.body;
-
-  try {
-    const purchaseOrder = await PurchaseOrder.findOne({po_number});
-    if(!purchaseOrder){
-      return res.status(404).json({message:"Purchase Order not found!"});
-    }
-    if (purchaseOrder.acknowledgment_date !== null) {
-      return res.status(400).json({ message: 'PurchaseOrder has already been acknowledged' });
-    }
-    const requestingVendor = await Vendor.findOne({ vendorCode });
-    if (!requestingVendor) {
-      return res.status(400).json({ message: 'Vendor not found' });
-    }
-    if (purchaseOrder.vendor.toString() !== requestingVendor._id.toString()) {
-      return res.status(403).json({ message: 'Unauthorized: Requesting vendor does not match the assigned vendor' });
-    }
-
-    purchaseOrder.acknowledgment_date = new Date();
-    await purchaseOrder.save();
-
-    res.json({ message: 'PurchaseOrder acknowledged successfully',acknowledgment_date: purchaseOrder.acknowledgment_date});
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
 
 exports.updatePurchaseOrderStatus = async (req, res) => {
   const { po_number } = req.params;
@@ -146,3 +118,15 @@ exports.updatePurchaseOrderStatus = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getOrdersByVendor = async (req,res) => {
+  const vendorId = req.params.id;
+
+  try {
+    const orders = await PurchaseOrder.find({ vendor: vendorId });
+    res.json(orders);
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
